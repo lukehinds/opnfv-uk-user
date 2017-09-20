@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Submit your first patch</title>
+<meta name="author" content="(Luke Hinds)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/moon.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Submit your first patch</h1><h2 class="author">Luke Hinds</h2><p class="date">Created: 2017-09-20 Wed 13:28</p>
+</section>
+
+<section>
+<section id="slide-org391ffcc">
+<h2 id="org391ffcc">Who am I?</h2>
+<div class="outline-text-2" id="text-org391ffcc">
+</div></section>
+<section id="slide-org99f51b5">
+<h3 id="org99f51b5">Software Engineer @ Red Hat in the OOT</h3>
+</section>
+<section id="slide-orgca8b964">
+<h3 id="orgca8b964">OPNFV Release Engineering / Infra Working Group (anteater)</h3>
+</section>
+<section id="slide-org2aac03a">
+<h3 id="org2aac03a">OpenStack Security Project Team Lead</h3>
+</section>
+<section id="slide-org0c1bf6d">
+<h3 id="org0c1bf6d">Fedora Packager (ExaBGP, Bagpipe BGP)</h3>
+<p>
+but an Arch Linux user!
+</p>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgdd07c11">
+<h2 id="orgdd07c11">What we going to do?</h2>
+<p>
+Walk through the set up  needed to contribute a patch to an OPNFV code repository
+</p>
+
+</section>
+<section id="slide-org21fc8fb">
+<h3 id="org21fc8fb">I don't code, why would I want to do that?</h3>
+<p>
+Contribute to a specification, add LAB configuration, edit Documentation.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orga256162">
+<h2 id="orga256162">A few things&#x2026;</h2>
+<div class="outline-text-2" id="text-orga256162">
+</div></section>
+<section id="slide-org67fb4d3">
+<h3 id="org67fb4d3">Operating Systems</h3>
+<p>
+macOS or Linux.
+</p>
+
+<p>
+Its going to be challenge to support windows 
+(e.g. use a virtual machine instead)
+</p>
+
+</section>
+<section id="slide-orge483893">
+<h3 id="orge483893">Timing</h3>
+<p>
+I will try to not speed along (tell me to stop)
+</p>
+
+<p>
+Get in touch after if you still need support
+</p>
+
+</section>
+<section id="slide-orgdbf5a15">
+<h3 id="orgdbf5a15">Etherpad link</h3>
+<p>
+<a href="https://etherpad.opnfv.org/p/opnfv-uk-patch-tutorial">https://etherpad.opnfv.org/p/opnfv-uk-patch-tutorial</a>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb16acea">
+<h2 id="orgb16acea">Lets Begin!</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-org7367bb7">
+<h2 id="org7367bb7">Linux Foundation Account</h2>
+<ol>
+<li><a href="https://identity.linuxfoundation.org/">https://identity.linuxfoundation.org/</a></li>
+<li>Select the option "I need to create a Linux Foundation ID"</li>
+<li>Fill out the form that appears:</li>
+<li>Open your email account and look for a message with the subject line: "Validate your Linux Foundation ID email".</li>
+<li>Open the received URL to validate your email address.</li>
+<li>Verify the browser says the message You have successfully "validated your e-mail address".</li>
+<li>Access Gerrit by selecting "Sign In" and use your Linux Foundation account login details.</li>
+
+</ol>
+
+</section>
+</section>
+<section>
+<section id="slide-org4adf8d2">
+<h2 id="org4adf8d2">SSH Key</h2>
+<p>
+Open A Terminal and type the following:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-org">ssh-keygen -t rsa -C "your_email@example.com"
+</pre>
+</div>
+
+<p>
+Password is optional. I use one, some don't. I would.
+</p>
+
+</section>
+<section id="slide-org731901b">
+<h3 id="org731901b">Example (on macOS)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-org">Your identification has been saved in <span style="text-decoration: underline;">/Users/myname/</span>.ssh/id_rsa.
+Your public key has been saved in <span style="text-decoration: underline;">/Users/myname/</span>.ssh/id_rsa.pub.
+The key fingerprint is:
+ae:89:72:0b:85:da:5a:f4:7c:1f:c2:43:fd:c6:44:38 myname@mymac.local
+The key's randomart image is:
+<span style="text-decoration: line-through;">+--[ RSA 2048]----+</span>
+<span style="color: #b2b2b2; background-color: #293239;">|                 |</span>
+<span style="color: #b2b2b2; background-color: #293239;">|         .       |</span>
+<span style="color: #b2b2b2; background-color: #293239;">|        E .      |</span>
+<span style="color: #b2b2b2; background-color: #293239;">|   .   . o       |</span>
+<span style="color: #b2b2b2; background-color: #293239;">|  o . . S .      |</span>
+<span style="color: #b2b2b2; background-color: #293239;">| + + o . +       |</span>
+<span style="color: #b2b2b2; background-color: #293239;">|. + o = o +      |</span>
+<span style="color: #b2b2b2; background-color: #293239;">| o...o * o       |</span>
+<span style="color: #b2b2b2; background-color: #293239;">|.  oo.o .        |</span>
+<span style="text-decoration: line-through;">+-----------------+</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgcc831bf">
+<h3 id="orgcc831bf">Add Public Key to Gerrit</h3>
+<ol>
+<li>Open <code>id_rsa.pub</code> in a text editor.</li>
+<li>Paste the text into Gerrit &gt; Settings &gt; SSH Public Keys &gt; Add Key</li>
+
+</ol>
+
+
+
+
+<div class="figure">
+<p><img src="SSH Key/gerrit-sshkey_2017-08-25_13-08-53.png" alt="gerrit-sshkey_2017-08-25_13-08-53.png" />
+</p>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org80a1edb">
+<h2 id="org80a1edb">Tools</h2>
+<div class="outline-text-2" id="text-org80a1edb">
+</div></section>
+<section id="slide-org089021a">
+<h3 id="org089021a">Git (Linux)</h3>
+<p>
+<code>sudo apt-get install git</code>
+</p>
+
+<p>
+<code>sudo pacman -S git</code>
+</p>
+
+<p>
+<code>sudo dnf install git</code>
+</p>
+
+<p>
+<code>sudo yum install git</code>
+</p>
+
+</section>
+<section id="slide-org16267d9">
+<h3 id="org16267d9">Git (macOS)</h3>
+<p>
+Open <code>iterm</code> and type:
+</p>
+
+<p>
+<code>git --version</code>
+</p>
+
+
+
+
+<div class="figure">
+<p><img src="Tools/install_git_mac_2017-08-25_13-28-04.jpg" alt="install_git_mac_2017-08-25_13-28-04.jpg" />
+</p>
+</div>
+
+<p>
+or install <code>Xcode</code>?
+</p>
+
+</section>
+<section id="slide-org79b83f9">
+<h3 id="org79b83f9">git-review (Linux)</h3>
+<p>
+<code>sudo apt-get install git-review</code>
+</p>
+
+<p>
+<code>sudo yum install git-review</code>
+</p>
+
+<p>
+<code>sudo dnf install git-review</code>
+</p>
+
+<p>
+<code>sudo pacman -S git-review</code>
+</p>
+
+<p>
+<code>pip install git-review</code>
+</p>
+
+</section>
+<section id="slide-org53bbce2">
+<h3 id="org53bbce2">git-review (macOS)</h3>
+<p>
+Install Homebrew: 
+<a href="https://github.com/Homebrew/legacy-homebrew">https://github.com/Homebrew/legacy-homebrew</a>
+</p>
+
+<p>
+Open <code>iterm</code>:
+</p>
+
+<p>
+<code>brew install git-review</code>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org1c1568f">
+<h2 id="org1c1568f">Lets clone a repository</h2>
+<div class="outline-text-2" id="text-org1c1568f">
+</div></section>
+<section id="slide-org368a003">
+<h3 id="org368a003">git clone sandbox</h3>
+<p>
+Open a terminal / iterm and type the following
+</p>
+
+<p>
+<code>git clone https://gerrit.opnfv.org/gerrit/sandbox</code>
+</p>
+
+</section>
+<section id="slide-orgae539bf">
+<h3 id="orgae539bf">Set up git-review</h3>
+<p>
+<code>git review -s</code>
+</p>
+
+</section>
+<section id="slide-orgeec8ddc">
+<h3 id="orgeec8ddc">Let's see how that looks</h3>
+<div class="org-src-container">
+
+<pre  class="src src-org">% git clone <span style="color: #2aa1ae; text-decoration: underline;"><a href="https://gerrit.opnfv.org/gerrit/sandbox">https://gerrit.opnfv.org/gerrit/sandbox</a></span>
+Cloning into 'sandbox'...
+remote: Total 17 (delta 0), reused 17 (delta 0)
+Unpacking objects: 100% (17/17), done.
+
+% git review -s
+Could not connect to gerrit.
+Enter your gerrit username: lukehinds
+Trying again with ssh://lukehinds@gerrit.opnfv.org:29418/sandbox.git
+Creating a git remote called "gerrit" that maps to:
+  ssh://lukehinds@gerrit.opnfv.org:29418/sandbox.git
+
+This repository is now set up for use with git-review. You can set the
+default username for future repositories with:
+  git config --global --add gitreview.username "lukehinds"
+
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org28be763">
+<h2 id="org28be763">Now lets make a change</h2>
+<div class="outline-text-2" id="text-org28be763">
+</div></section>
+<section id="slide-org1fedadb">
+<h3 id="org1fedadb">Allocate a file to yourself</h3>
+<p>
+Open Etherpad and allocate a file to yourself by marking your name.
+</p>
+
+<p>
+<code>sandbox/meetup/patch-1</code>
+</p>
+
+<p>
+I will use <code>patch-1</code> as an example from now on.
+</p>
+
+</section>
+<section id="slide-org7009fea">
+<h3 id="org7009fea">Make a branch</h3>
+<p>
+<code>git checkout -b mypatch</code>
+</p>
+
+</section>
+<section id="slide-org21a361d">
+<h3 id="org21a361d">Make a change</h3>
+<p>
+Open your <code>meetup/patch-1</code> file and make a change, and save it..
+</p>
+
+</section>
+<section id="slide-org139f04f">
+<h3 id="org139f04f">Add the change</h3>
+<p>
+<code>git add meetup/patch-1</code>
+</p>
+
+</section>
+<section id="slide-org27f2abd">
+<h3 id="org27f2abd">Commit the Patch</h3>
+<p>
+<code>git commit -a --signoff</code>
+</p>
+
+<p>
+Enter a message such as:
+</p>
+
+<p>
+"I am fixing some spelling / typos"
+</p>
+
+<p>
+And save / quit out of the text editor
+</p>
+
+</section>
+<section id="slide-org40f1dee">
+<h3 id="org40f1dee">Push the patch for review</h3>
+<p>
+<code>git review</code>
+</p>
+
+</section>
+<section id="slide-org2edc504">
+<h3 id="org2edc504">Example&#x2026;</h3>
+<div class="org-src-container">
+
+<pre  class="src src-org">% vim patch-1
+
+% git add patch-1
+
+% git commit -a --signoff
+[mypatch 5fc1779] Fixed a typo
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+% git review
+
+remote: Processing changes: new: 1, refs: 1, done            
+remote: 
+remote: New Changes:        
+remote:   <span style="color: #2aa1ae; text-decoration: underline;"><a href="https://gerrit.opnfv.org/gerrit/42513">https://gerrit.opnfv.org/gerrit/42513</a></span> Fixed a typo        
+remote: 
+To ssh://gerrit.opnfv.org:29418/sandbox.git
+ * [new branch]      HEAD -&gt; refs/publish/master/mypatch
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org6d768ea">
+<h2 id="org6d768ea">Let's review each others code!</h2>
+<div class="outline-text-2" id="text-org6d768ea">
+</div></section>
+<section id="slide-orgfb8c742">
+<h3 id="orgfb8c742">Grab the person next to you</h3>
+<p>
+Give them your review URL:
+</p>
+
+<p>
+<a href="https://gerrit.opnfv.org/gerrit/42513">https://gerrit.opnfv.org/gerrit/42513</a>
+</p>
+
+</section>
+<section id="slide-org0e80171">
+<h3 id="org0e80171">As the reviewer.</h3>
+<ol>
+<li>Reply</li>
+
+<li>Code Review: Looks good to me, approved +2</li>
+
+<li>Verified: Verified +1</li>
+
+<li>Submit (Merge)</li>
+
+</ol>
+
+<p>
+Note: Typically it requires to core commiters to approve a patch (so two +2's)
+</p>
+
+</section>
+<section id="slide-orgd45253e">
+<h3 id="orgd45253e">Example</h3>
+<div class="outline-text-3" id="text-orgd45253e">
+</div></section>
+<section id="slide-orgc190fc3">
+<h4 id="orgc190fc3">Review +2 / Verified +1</h4>
+
+<div class="figure">
+<p><img src="Let's review each others code!/review+2_2017-09-20_12-33-40.png" alt="review+2_2017-09-20_12-33-40.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgd539e2c">
+<h4 id="orgd539e2c">Submit</h4>
+
+<div class="figure">
+<p><img src="Let's review each others code!/submit_2017-09-20_12-35-35.png" alt="submit_2017-09-20_12-35-35.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgd24c751">
+<h4 id="orgd24c751">Result</h4>
+
+<div class="figure">
+<p><img src="Let's review each others code!/result_2017-09-20_12-36-57.png" alt="result_2017-09-20_12-36-57.png" />
+</p>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org8471b36">
+<h2 id="org8471b36">Last of all</h2>
+<div class="outline-text-2" id="text-org8471b36">
+</div></section>
+<section id="slide-orgdb22055">
+<h3 id="orgdb22055">Checkout master</h3>
+<p>
+Once you patch has <code>merged</code>, change back to master branch:
+</p>
+
+<p>
+<code>git checkout master</code>
+</p>
+
+</section>
+<section id="slide-org2e72b00">
+<h3 id="org2e72b00">Pull Changes</h3>
+<p>
+<code>git pull</code>
+</p>
+
+</section>
+<section id="slide-orgebe6621">
+<h3 id="orgebe6621">Make another patch</h3>
+<p>
+<code>git checkout -b 2ndpatch</code>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd404d60">
+<h2 id="orgd404d60">Done!</h2>
+</section>
+</section>
+</div>
+</div>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
